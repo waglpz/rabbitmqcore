@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  producer:
+    build:       
+      context: ./.docker
+      args:
+        - APPUID=${APPUID}
+        - APPUGID=${APPUGID}      
+    container_name: producer
+    volumes:
+      - ./:/app
+    networks:
+      net:
+        # Achtung 10.120.5.1 ist Gateway Adresse der Docker-Bridge
+        ipv4_address: 10.120.5.4
+  consumer:
+    build:       
+      context: ./.docker
+      args:
+        - APPUID=${APPUID}
+        - APPUGID=${APPUGID}      
+    container_name: consumer
+    volumes:
+      - ./:/app
+    networks:
+      net:
+        # Achtung 10.120.5.1 ist Gateway Adresse der Docker-Bridge
+        ipv4_address: 10.120.5.3
+  rabbitmq:
+    image: rabbitmq:management
+#    command:
+#      "sleep 10000"
+    networks:
+      net:
+        # Achtung 10.120.5.1 ist Gateway Adresse der Docker-Bridge
+        ipv4_address: 10.120.5.2
+networks:
+  net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.120.5.0/24            
