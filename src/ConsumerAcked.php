@@ -15,6 +15,15 @@ final class ConsumerAcked
         $this->callback = $callback;
     }
 
+    public function setPrefetchMessages(int $count) : void
+    {
+        $this->channel->basic_qos(
+            0,
+            $count,
+            false
+        );
+    }
+
     public function consume() : void
     {
         if ($this->queues === null || \count($this->queues) < 1) {
@@ -32,5 +41,20 @@ final class ConsumerAcked
         while ($this->channel->is_consuming()) {
             $this->channel->wait();
         }
+    }
+
+    public function fetchMessage(string $queueName) : void
+    {
+        if (! isset($this->callback)) {
+            throw new \InvalidArgumentException('Callback not defined.');
+        }
+
+        $message = $this->channel->basic_get($queueName);
+        if ($message === null) {
+            return;
+        }
+
+        ($this->callback)($message);
+        $this->channel->basic_ack($message->get('delivery_tag'));
     }
 }
