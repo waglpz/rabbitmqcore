@@ -1,0 +1,56 @@
+{
+  "name": "waglpz/rabbitmqcore",
+  "description": "WAG RabbitMQ",
+  "license": "MIT",
+  "type": "library",
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "optimize-autoloader": true,
+    "apcu-autoloader": true,
+    "discard-changes": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "require": {
+    "php": "^7.4",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "php-amqplib/php-amqplib": "^2.12"
+  },
+  "require-dev": {
+    "doctrine/coding-standard": "^7.0",
+    "phpstan/phpstan": "^0.12",
+    "phpstan/phpstan-deprecation-rules": "^0.12",
+    "phpstan/phpstan-doctrine": "^0.12",
+    "phpstan/phpstan-phpunit": "^0.12",
+    "phpstan/phpstan-strict-rules": "^0.12",
+    "phpstan/phpstan-symfony": "^0.12",
+    "phpstan/phpstan-webmozart-assert": "^0.12",
+    "roave/security-advisories": "dev-master",
+    "squizlabs/php_codesniffer": "^3.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "WAG\\RabbitMq\\": "src"
+    }
+  },
+  "scripts": {
+    "cs-check": "phpcs -p --parallel=100",
+    "cs-fix": "phpcbf -p --parallel=100",
+    "analyse": [
+      "phpstan analyse --configuration=phpstan.neon bin/ config/ src/ tests/ --level max"
+    ],
+    "check": [
+      "@cs-check",
+      "@analyse"
+    ],
+    "post-create-project-cmd": [
+      "bash -c 'printf APPUID=$(id -u);  > .env'",
+      "bash -c 'printf APPUGID=$(id -g) >> .env'"
+    ],
+    "post-install-cmd": [
+      "sh bin/makedotenv.sh"
+    ]
+  }
+}
