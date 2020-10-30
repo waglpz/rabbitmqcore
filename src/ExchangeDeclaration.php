@@ -10,7 +10,7 @@ use PhpAmqpLib\Exchange\AMQPExchangeType;
 trait ExchangeDeclaration
 {
     private AMQPChannel $channel;
-    private string      $exchangeName;
+    private string $exchangeName;
     /** @var ?array<mixed> */
     private ?array $queues;
 

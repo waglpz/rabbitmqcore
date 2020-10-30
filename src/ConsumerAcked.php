@@ -12,12 +12,12 @@ final class ConsumerAcked
 
     private ?\Closure $callback;
 
-    public function setCallback(\Closure $callback) : void
+    public function setCallback(\Closure $callback): void
     {
         $this->callback = $callback;
     }
 
-    public function setPrefetchMessages(int $count) : void
+    public function setPrefetchMessages(int $count): void
     {
         $this->channel->basic_qos(
             0,
@@ -26,7 +26,7 @@ final class ConsumerAcked
         );
     }
 
-    public function consume() : void
+    public function consume(): void
     {
         if ($this->queues === null || \count($this->queues) < 1) {
             throw new \InvalidArgumentException('Queues are not yet defined?');
@@ -45,12 +45,12 @@ final class ConsumerAcked
         }
     }
 
-    public function acknowledgesMessage(AMQPMessage $message) : void
+    public function acknowledgesMessage(AMQPMessage $message): void
     {
         $message->get('channel')->basic_ack($message->get('delivery_tag'));
     }
 
-    public function fetchMessage(string $queueName, bool $doAck = true) : ?AMQPMessage
+    public function fetchMessage(string $queueName, bool $doAck = true): ?AMQPMessage
     {
         if (! isset($this->callback)) {
             throw new \InvalidArgumentException('Callback not defined.');

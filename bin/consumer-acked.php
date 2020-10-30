@@ -17,7 +17,7 @@ $config = include __DIR__ . '/../config/main.php';
     'password' => $password,
 ] = $config['connection'];
 
-$callbackAck = static function (AMQPMessage $message) : void {
+$callbackAck = static function (AMQPMessage $message): void {
     echo 'Message received', \PHP_EOL;
     // Do ???
     echo 'Message proceed', \PHP_EOL;
@@ -27,16 +27,16 @@ $callbackAck = static function (AMQPMessage $message) : void {
 $channel = (new ChannelBuilder($hostname, $port, $username, $password))->channelConsumerAcked();
 // todo: prefetch mode in Channel setzen !
 
-$exchangeName         ='exsampleExchangeName';
+$exchangeName         = 'exsampleExchangeName';
 $exchangeDeclarations = $config['exchangeDeclarations'][$exchangeName];
 
 $consumerAcked = new ConsumerAcked($channel, $exchangeName, \array_keys($exchangeDeclarations['queues']));
 $consumerAcked->setCallback($callbackAck);
 $consumerAcked->consume();
 
-register_shutdown_function(static function () use ($channel) : void {
+register_shutdown_function(static function () use ($channel): void {
     $channel->close();
-    $connection =$channel->getConnection();
+    $connection = $channel->getConnection();
     //@phpstan-ignore-next-line
     if ($connection === null) {
         return;

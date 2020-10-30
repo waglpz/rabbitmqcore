@@ -17,7 +17,7 @@ $config = include __DIR__ . '/../config/main.php';
     'password' => $password,
 ] = $config['connection'];
 
-$exchangeName         ='exsampleExchangeName';
+$exchangeName         = 'exsampleExchangeName';
 $exchangeDeclarations = $config['exchangeDeclarations'][$exchangeName];
 
 $channelBuilder = new ChannelBuilder(
@@ -27,11 +27,11 @@ $channelBuilder = new ChannelBuilder(
     $password
 );
 
-$ackFunction =static function () : void {
+$ackFunction = static function (): void {
     echo 'Message done',\PHP_EOL;
 };
 
-$nackFunction =static function () : void {
+$nackFunction = static function (): void {
     echo 'Message not done ! Error !',\PHP_EOL;
 };
 

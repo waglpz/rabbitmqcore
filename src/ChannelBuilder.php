@@ -24,13 +24,13 @@ final class ChannelBuilder
         $this->password = $password;
     }
 
-    public function getConnection() : AMQPStreamConnection
+    public function getConnection(): AMQPStreamConnection
     {
         return $this->connection ??
         $this->connection = new AMQPStreamConnection($this->hostname, $this->port, $this->username, $this->password);
     }
 
-    public function channelPublishConfirmed(callable $ack, callable $nack) : AMQPChannel
+    public function channelPublishConfirmed(callable $ack, callable $nack): AMQPChannel
     {
         $channel = $this->getConnection()->channel();
         $channel->set_ack_handler($ack);
@@ -40,7 +40,7 @@ final class ChannelBuilder
         return $channel;
     }
 
-    public function channelConsumerAcked() : AMQPChannel
+    public function channelConsumerAcked(): AMQPChannel
     {
         return $this->getConnection()->channel();
     }
