@@ -37,7 +37,15 @@ final class ConsumerAcked
         }
 
         foreach ($this->queues as $queue) {
-            $this->channel->basic_consume($queue, $queue . 'Consumer', false, false, false, false, $this->callback);
+            $this->channel->basic_consume(
+                $queue['name'],
+                $queue['name'] . 'Consumer',
+                false,
+                false,
+                false,
+                false,
+                $this->callback
+            );
         }
 
         while ($this->channel->is_consuming()) {
