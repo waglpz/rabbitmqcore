@@ -10,10 +10,10 @@ final class ProducerConfirmed
 {
     use ExchangeDeclaration;
 
-    public function publish(AMQPMessage $message): void
+    public function publish(AMQPMessage $message, string $routingKey = ''): void
     {
         $message->set('delivery_mode', AMQPMessage::DELIVERY_MODE_PERSISTENT);
-        $this->channel->basic_publish($message, $this->exchangeName);
+        $this->channel->basic_publish($message, $this->exchangeName, $routingKey);
         $this->channel->wait_for_pending_acks();
     }
 

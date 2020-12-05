@@ -17,9 +17,6 @@ $config = include __DIR__ . '/../config/main.php';
     'password' => $password,
 ] = $config['connection'];
 
-$exchangeName         = 'exsampleExchangeName';
-$exchangeDeclarations = $config['exchangeDeclarations'][$exchangeName];
-
 $channelBuilder = new ChannelBuilder(
     $hostname,
     $port,
@@ -38,11 +35,16 @@ $nackFunction = static function (): void {
 
 $channel = $channelBuilder->channelPublishConfirmed($ackFunction, $nackFunction);
 
-$producer = new ProducerConfirmed(
-    $channel,
-    $exchangeName,
-    \array_keys($exchangeDeclarations['queues'])
-);
+$example0 = $config['example_0'];
+$producer = new ProducerConfirmed($channel, $example0['exchange']['name'], $example0['queues']);
+$message  = new AMQPMessage('{"name":"krueger","vorname":"Lutz","properties":{"alter":"58"}');
 
-$message = new AMQPMessage('{"name":"krueger","vorname":"Lutz","properties":{"alter":"58"}');
-$producer->publish($message);
+$producer->publish($message, 'v1');
+$producer->publish($message, 'v2');
+
+$channel  = $channelBuilder->channelPublishConfirmed($ackFunction, $nackFunction);
+$example1 = $config['example_1'];
+$producer = new ProducerConfirmed($channel, $example1['exchange']['name'], $example1['queues']);
+$message  = new AMQPMessage('{"name":"krueger","vorname":"Lutz","properties":{"alter":"58"}');
+
+$producer->publish($message, 'v3');

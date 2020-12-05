@@ -31,9 +31,16 @@ trait ExchangeDeclaration
             return;
         }
 
-        foreach ($queues as $queueName) {
-            $this->channel->queue_declare($queueName, false, $persistent, false, false);
-            $this->channel->queue_bind($queueName, $exchangeName);
+        foreach ($queues as $queue) {
+            $this->channel->queue_declare($queue['name'], false, $persistent, false, false);
+
+            if (isset($queue['binding_keys'])) {
+                foreach ($queue['binding_keys'] as $bindingKey) {
+                    $this->channel->queue_bind($queue['names'], $exchangeName, $bindingKey);
+                }
+            } else {
+                $this->channel->queue_bind($queue['names'], $exchangeName);
+            }
         }
     }
 

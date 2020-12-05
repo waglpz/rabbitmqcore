@@ -12,7 +12,7 @@ $config = include __DIR__ . '/../config/main.php';
 
 [
     'hostname' => $hostname,
-    'port' => $port,
+    'port'     => $port,
     'username' => $username,
     'password' => $password,
 ] = $config['connection'];
@@ -25,22 +25,26 @@ $callbackAck = static function (AMQPMessage $message): void {
 };
 
 $channel = (new ChannelBuilder($hostname, $port, $username, $password))->channelConsumerAcked();
-// todo: prefetch mode in Channel setzen !
 
-$exchangeName         = 'exsampleExchangeName';
-$exchangeDeclarations = $config['exchangeDeclarations'][$exchangeName];
-
-$consumerAcked = new ConsumerAcked($channel, $exchangeName, \array_keys($exchangeDeclarations['queues']));
+$consumerCfg0  = $config['example_0'];
+$consumerAcked = new ConsumerAcked(
+    $channel,
+    $consumerCfg0['exchange']['name'],
+    $consumerCfg0['queues'],
+    $consumerCfg0['exchange']['type']
+);
 $consumerAcked->setCallback($callbackAck);
 $consumerAcked->consume();
 
-register_shutdown_function(static function () use ($channel): void {
-    $channel->close();
-    $connection = $channel->getConnection();
-    //@phpstan-ignore-next-line
-    if ($connection === null) {
-        return;
-    }
+register_shutdown_function(
+    static function () use ($channel): void {
+        $channel->close();
+        $connection = $channel->getConnection();
+        //@phpstan-ignore-next-line
+        if ($connection === null) {
+            return;
+        }
 
-    $connection->close();
-});
+        $connection->close();
+    }
+);
