@@ -10,7 +10,7 @@ use PhpAmqpLib\Exchange\AMQPExchangeType;
 trait ExchangeDeclaration
 {
     private AMQPChannel $channel;
-    private string $exchangeName;
+    private string      $exchangeName;
     /** @var ?array<mixed> */
     private ?array $queues;
 
@@ -36,10 +36,10 @@ trait ExchangeDeclaration
 
             if (isset($queue['binding_keys'])) {
                 foreach ($queue['binding_keys'] as $bindingKey) {
-                    $this->channel->queue_bind($queue['names'], $exchangeName, $bindingKey);
+                    $this->channel->queue_bind($queue['name'], $exchangeName, $bindingKey);
                 }
             } else {
-                $this->channel->queue_bind($queue['names'], $exchangeName);
+                $this->channel->queue_bind($queue['name'], $exchangeName);
             }
         }
     }
