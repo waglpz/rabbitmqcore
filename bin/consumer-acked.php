@@ -6,7 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use PhpAmqpLib\Message\AMQPMessage;
 use WAG\RabbitMq\ChannelBuilder;
-use WAG\RabbitMq\ConsumerAcked;
+use WAG\RabbitMq\Consumer;
 
 $config = include __DIR__ . '/../config/main.php';
 
@@ -24,10 +24,10 @@ $callbackAck = static function (AMQPMessage $message): void {
     $message->get('channel')->basic_ack($message->get('delivery_tag'));
 };
 
-$channel = (new ChannelBuilder($hostname, $port, $username, $password))->channelConsumerAcked();
+$channel = (new ChannelBuilder($hostname, $port, $username, $password))->channel();
 
 $consumerCfg0  = $config['example_0'];
-$consumerAcked = new ConsumerAcked(
+$consumerAcked = new Consumer(
     $channel,
     $consumerCfg0['exchange']['name'],
     $consumerCfg0['queues'],
