@@ -5,9 +5,9 @@ name: PHP Composer
 #    working-directory: app
 on:
   push:
-    branches: [ master ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, develop ]
 
 jobs:
   build:
@@ -31,7 +31,7 @@ jobs:
 
     - name: Install dependencies
 #      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer install --prefer-dist --no-progress
 
     # Add a test script to composer.json, for instance: "test":"vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
@@ -42,5 +42,5 @@ jobs:
     - name: Run Static analyser check
       run: composer run-script analyse
 
- #   - name: Run Unit tests
- #     run: composer run-script test-unit
+    - name: Run Unit tests
+      run: composer run-script test

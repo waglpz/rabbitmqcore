@@ -40,8 +40,13 @@ final class ChannelBuilder
         return $channel;
     }
 
-    public function channelConsumerAcked(): AMQPChannel
+    public function channel(): AMQPChannel
     {
         return $this->getConnection()->channel();
+    }
+
+    public function setConnection(AMQPStreamConnection $connection): void
+    {
+        $this->connection = $connection;
     }
 }

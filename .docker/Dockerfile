@@ -28,6 +28,8 @@ RUN docker-php-ext-enable opcache;       \
 RUN groupadd -g ${APPUGID} nutzer;    \
     useradd -r -l -u ${APPUID} -m -g nutzer nutzer
 
+RUN pecl install xdebug-2.9.0
+
 # composer
 ENV COMPOSER_HOME /home/nutzer
 
