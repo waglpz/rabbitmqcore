@@ -6,7 +6,7 @@ namespace WAG\RabbitMq;
 
 use PhpAmqpLib\Message\AMQPMessage;
 
-final class ConsumerAcked
+final class Consumer
 {
     use ExchangeDeclaration;
 

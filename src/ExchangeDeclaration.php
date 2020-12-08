@@ -36,10 +36,10 @@ trait ExchangeDeclaration
 
             if (isset($queue['binding_keys'])) {
                 foreach ($queue['binding_keys'] as $bindingKey) {
-                    $this->channel->queue_bind($queue['names'], $exchangeName, $bindingKey);
+                    $this->channel->queue_bind($queue['name'], $exchangeName, $bindingKey);
                 }
             } else {
-                $this->channel->queue_bind($queue['names'], $exchangeName);
+                $this->channel->queue_bind($queue['name'], $exchangeName);
             }
         }
     }

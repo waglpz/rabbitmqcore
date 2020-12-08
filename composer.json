@@ -27,6 +27,7 @@
     "phpstan/phpstan-strict-rules": "^0.12",
     "phpstan/phpstan-symfony": "^0.12",
     "phpstan/phpstan-webmozart-assert": "^0.12",
+    "phpunit/phpunit": "^9.5",
     "roave/security-advisories": "dev-master",
     "squizlabs/php_codesniffer": "^3.5"
   },
@@ -35,15 +36,25 @@
       "WAG\\RabbitMq\\": "src"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "WAG\\RabbitMq\\Tests\\": "tests"
+    }
+  },
   "scripts": {
     "cs-check": "phpcs -p --parallel=100",
     "cs-fix": "phpcbf -p --parallel=100",
     "analyse": [
       "phpstan analyse --configuration=phpstan.neon bin/ config/ src/ tests/ --level max"
     ],
+    "test-all": "phpunit --colors=always tests",
     "check": [
       "@cs-check",
-      "@analyse"
+      "@analyse",
+      "@test"
+    ],
+    "test": [
+      "@test-all"
     ],
     "post-create-project-cmd": [
       "bash -c 'printf APPUID=$(id -u);  > .env'",

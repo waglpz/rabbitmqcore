@@ -10,6 +10,7 @@ services:
     container_name: producer
     volumes:
       - ./:/app
+      - ./.docker/php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
     networks:
       net:
         # Achtung 10.120.5.1 ist Gateway Adresse der Docker-Bridge
