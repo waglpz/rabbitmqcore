@@ -13,7 +13,7 @@
     "sort-packages": true
   },
   "require": {
-    "php": ">=7.4.0",
+    "php": "^7.4",
     "ext-json": "*",
     "ext-mbstring": "*",
     "php-amqplib/php-amqplib": "^2.12"

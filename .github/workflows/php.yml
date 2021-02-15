@@ -28,13 +28,16 @@ jobs:
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php-
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+        coverage: pcov
+        tools: composer:v2
 
     - name: Install dependencies
 #      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress
-
-    # Add a test script to composer.json, for instance: "test":"vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
+      run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Run Code style check
       run: composer run-script cs-check
