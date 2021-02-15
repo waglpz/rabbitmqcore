@@ -6,7 +6,7 @@ namespace WAG\RabbitMq;
 
 use PhpAmqpLib\Message\AMQPMessage;
 
-final class ProducerConfirmed
+final class ProducerConfirmed implements Producer
 {
     use ExchangeDeclaration;
 
