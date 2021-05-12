@@ -15,6 +15,7 @@ $config = include __DIR__ . '/../config/main.php';
     'port'     => $port,
     'username' => $username,
     'password' => $password,
+    'vhost'    => $vhost,
 ] = $config['connection'];
 
 $callbackAck = static function (AMQPMessage $message): void {
@@ -24,7 +25,7 @@ $callbackAck = static function (AMQPMessage $message): void {
     $message->get('channel')->basic_ack($message->get('delivery_tag'));
 };
 
-$channel = (new ChannelBuilder($hostname, $port, $username, $password))->channel();
+$channel = (new ChannelBuilder($hostname, $port, $username, $password, $vhost))->channel();
 
 $consumerCfg0  = $config['example_0'];
 $consumerAcked = new Consumer(

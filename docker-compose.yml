@@ -16,7 +16,7 @@ services:
         # Achtung 10.120.5.1 ist Gateway Adresse der Docker-Bridge
         ipv4_address: 10.120.5.4
   consumer:
-    build:       
+    build:
       context: ./.docker
       args:
         - APPUID=${APPUID}

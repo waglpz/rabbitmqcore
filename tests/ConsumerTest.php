@@ -112,8 +112,10 @@ class ConsumerTest extends TestCase
                 ->method('basic_get')
                 ->with('test_queue')
                 ->willReturn($message);
+
         $consumer = new Consumer($channel, 'exchange_test');
         $callback = static fn (AMQPMessage $message): AMQPMessage => $message;
+
         $consumer->setCallback($callback);
         $factMessage = $consumer->fetchMessage('test_queue');
         self::assertSame($factMessage, $message);
@@ -134,8 +136,10 @@ class ConsumerTest extends TestCase
                 ->method('basic_get')
                 ->with('test_queue')
                 ->willReturn($message);
+
         $consumer = new Consumer($channel, 'exchange_test');
         $callback = static fn (AMQPMessage $message): AMQPMessage => $message;
+
         $consumer->setCallback($callback);
         $factMessage = $consumer->fetchMessage('test_queue', false);
         self::assertSame($factMessage, $message);

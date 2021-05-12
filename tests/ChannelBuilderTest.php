@@ -21,11 +21,13 @@ class ChannelBuilderTest extends TestCase
         $port           = '1234';
         $user           = 'test';
         $password       = 'test';
+        $vhost          = '/test';
         $channelBuilder = new ChannelBuilder(
             $host,
             $port,
             $user,
-            $password
+            $password,
+            $vhost
         );
         $channel        = $this->createMock(AMQPChannel::class);
         $connection     = $this->createMock(AMQPStreamConnection::class);
@@ -44,11 +46,13 @@ class ChannelBuilderTest extends TestCase
         $port           = '1234';
         $user           = 'test';
         $password       = 'test';
+        $vhost          = '/test';
         $channelBuilder = new ChannelBuilder(
             $host,
             $port,
             $user,
-            $password
+            $password,
+            $vhost
         );
         $ackCallback    = static fn () => null;
         $nackCallback   = static fn () => null;

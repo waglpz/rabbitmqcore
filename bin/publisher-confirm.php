@@ -12,26 +12,27 @@ $config = include __DIR__ . '/../config/main.php';
 
 [
     'hostname' => $hostname,
-    'port' => $port,
+    'port'     => $port,
     'username' => $username,
     'password' => $password,
+    'vhost'    => $vhost,
 ] = $config['connection'];
 
 $channelBuilder = new ChannelBuilder(
     $hostname,
     $port,
     $username,
-    $password
+    $password,
+    $vhost
 );
 
 $ackFunction = static function (): void {
-    echo 'Message done',\PHP_EOL;
+    echo 'Message done', \PHP_EOL;
 };
 
 $nackFunction = static function (): void {
-    echo 'Message not done ! Error !',\PHP_EOL;
+    echo 'Message not done ! Error !', \PHP_EOL;
 };
-
 
 $channel = $channelBuilder->channelPublishConfirmed($ackFunction, $nackFunction);
 
