@@ -25,7 +25,7 @@ trait MessagePublisher
         $this->nackFunction = $function;
     }
 
-    public function publisher(string $id): ProducerConfirmed
+    public function publisher(string $id): Producer
     {
         if (! isset($this->publisher[$id])) {
             if (! isset(self::$configQueues[$id])) {
