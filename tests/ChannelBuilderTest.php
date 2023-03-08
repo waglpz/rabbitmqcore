@@ -27,7 +27,7 @@ class ChannelBuilderTest extends TestCase
             $port,
             $user,
             $password,
-            $vhost
+            $vhost,
         );
         $channel        = $this->createMock(AMQPChannel::class);
         $connection     = $this->createMock(AMQPStreamConnection::class);
@@ -52,7 +52,7 @@ class ChannelBuilderTest extends TestCase
             $port,
             $user,
             $password,
-            $vhost
+            $vhost,
         );
         $ackCallback    = static fn () => null;
         $nackCallback   = static fn () => null;

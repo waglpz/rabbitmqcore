@@ -1,12 +1,11 @@
-version: '3'
-
 services:
   producer:
-    build:       
-      context: ./.docker
-      args:
-        - APPUID=${APPUID}
-        - APPUGID=${APPUGID}      
+    image: waglpz/vwd-base:8.2
+#    build:
+#      context: ./.docker
+#      args:
+#        - APPUID=${APPUID}
+#        - APPUGID=${APPUGID}
     container_name: producer
     volumes:
       - ./:/app
@@ -14,20 +13,21 @@ services:
     networks:
       net:
         # Achtung 10.120.5.1 ist Gateway Adresse der Docker-Bridge
-        ipv4_address: 10.120.5.4
+        ipv4_address: 10.120.50.4
   consumer:
-    build:
-      context: ./.docker
-      args:
-        - APPUID=${APPUID}
-        - APPUGID=${APPUGID}      
+    image: waglpz/vwd-base:8.2
+#    build:
+#      context: ./.docker
+#      args:
+#        - APPUID=${APPUID}
+#        - APPUGID=${APPUGID}
     container_name: consumer
     volumes:
       - ./:/app
     networks:
       net:
         # Achtung 10.120.5.1 ist Gateway Adresse der Docker-Bridge
-        ipv4_address: 10.120.5.3
+        ipv4_address: 10.120.50.3
   rabbitmq:
     image: rabbitmq:management
 #    command:
@@ -35,13 +35,13 @@ services:
     networks:
       net:
         # Achtung 10.120.5.1 ist Gateway Adresse der Docker-Bridge
-        ipv4_address: 10.120.5.2
+        ipv4_address: 10.120.50.2
 networks:
   net:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.120.5.0/24
+        - subnet: 10.120.50.0/24
 
 ## to accessing rabbitmq GUI please open
 # http://10.120.5.2:15672/

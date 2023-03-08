@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace WAG\RabbitMq;
 
+use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Message\AMQPMessage;
 
 final class Consumer
 {
     use ExchangeDeclaration;
 
-    private ?\Closure $callback;
+    private \Closure|null $callback;
 
     public function setCallback(\Closure $callback): void
     {
@@ -22,7 +23,7 @@ final class Consumer
         $this->channel->basic_qos(
             0,
             $count,
-            false
+            false,
         );
     }
 
@@ -37,6 +38,7 @@ final class Consumer
         }
 
         foreach ($this->queues as $queue) {
+            \assert(\is_array($queue));
             $this->channel->basic_consume(
                 $queue['name'],
                 $queue['name'] . 'Consumer',
@@ -44,7 +46,7 @@ final class Consumer
                 false,
                 false,
                 false,
-                $this->callback
+                $this->callback,
             );
         }
 
@@ -55,10 +57,14 @@ final class Consumer
 
     public function acknowledgesMessage(AMQPMessage $message): void
     {
-        $message->get('channel')->basic_ack($message->get('delivery_tag'));
+        $channel = $message->get('channel');
+        \assert($channel instanceof AMQPChannel);
+        $deliveryTag = $message->get('delivery_tag');
+        \assert(\is_int($deliveryTag));
+        $channel->basic_ack($deliveryTag);
     }
 
-    public function fetchMessage(string $queueName, bool $doAck = true): ?AMQPMessage
+    public function fetchMessage(string $queueName, bool $doAck = true): AMQPMessage|null
     {
         if (! isset($this->callback)) {
             throw new \InvalidArgumentException('Callback not defined.');

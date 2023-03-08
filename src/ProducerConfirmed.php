@@ -21,7 +21,6 @@ final class ProducerConfirmed implements Producer
     {
         $this->channel->close();
         $connection = $this->channel->getConnection();
-        // @phpstan-ignore-next-line
         if ($connection === null) {
             return;
         }

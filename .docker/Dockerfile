@@ -8,7 +8,7 @@ RUN apt-get update;                 \
     apt-get install                 \
             -y                      \
             --no-install-recommends \
-        libonig-dev                 \    
+        libonig-dev                 \
         libzip-dev                  \
         locales                     \
         unzip                       \
@@ -23,7 +23,7 @@ RUN apt-get update;                 \
 RUN docker-php-ext-enable opcache;       \
     docker-php-ext-install                       \
         mbstring                        \
-        sockets                                             
+        sockets
 
 RUN groupadd -g ${APPUGID} nutzer;    \
     useradd -r -l -u ${APPUID} -m -g nutzer nutzer
@@ -39,4 +39,3 @@ RUN curl -sS https://getcomposer.org/installer |                \
     && chown -R nutzer:nutzer $COMPOSER_HOME
 
 WORKDIR /app
-

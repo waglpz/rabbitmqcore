@@ -37,7 +37,7 @@ trait MessagePublisher
                 self::$configMqConnection['port'],
                 self::$configMqConnection['username'],
                 self::$configMqConnection['password'],
-                self::$configMqConnection['vhost']
+                self::$configMqConnection['vhost'],
             );
 
             $this->ackFunction ?? $this->ackFunction = static function (): void {

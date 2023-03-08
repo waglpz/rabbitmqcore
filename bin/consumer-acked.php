@@ -32,7 +32,7 @@ $consumerAcked = new Consumer(
     $channel,
     $consumerCfg0['exchange']['name'],
     $consumerCfg0['queues'],
-    $consumerCfg0['exchange']['type']
+    $consumerCfg0['exchange']['type'],
 );
 $consumerAcked->setCallback($callbackAck);
 $consumerAcked->consume();
@@ -47,5 +47,5 @@ register_shutdown_function(
         }
 
         $connection->close();
-    }
+    },
 );
