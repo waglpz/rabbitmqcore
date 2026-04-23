@@ -1,5 +1,8 @@
-vendor
-composer.lock
-.env
-.idea
-.phpunit.cache
+/.env
+/.idea
+/composer.lock
+/phpunit.xml
+/var
+/vendor/
+!**/.gitignore
+!**/.gitkeep

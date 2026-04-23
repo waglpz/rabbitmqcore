@@ -30,7 +30,7 @@ trait MessageFetcher
             self::$configMqConnection['port'],
             self::$configMqConnection['username'],
             self::$configMqConnection['password'],
-            self::$configMqConnection['vhost']
+            self::$configMqConnection['vhost'],
         );
 
         if (! isset(self::$configQueues[$id])) {
@@ -49,9 +49,7 @@ trait MessageFetcher
         return $this->consumer[$id];
     }
 
-    /** @param mixed $callback
-     */
-    public function onFetchCallback($callback, string $id): void
+    public function onFetchCallback(mixed $callback, string $id): void
     {
         $this->callback[$id] = $callback;
     }

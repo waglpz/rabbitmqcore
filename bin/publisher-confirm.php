@@ -23,7 +23,7 @@ $channelBuilder = new ChannelBuilder(
     $port,
     $username,
     $password,
-    $vhost
+    $vhost,
 );
 
 $ackFunction = static function (): void {

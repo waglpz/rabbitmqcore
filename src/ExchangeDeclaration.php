@@ -9,22 +9,13 @@ use PhpAmqpLib\Exchange\AMQPExchangeType;
 
 trait ExchangeDeclaration
 {
-    private AMQPChannel $channel;
-    private string $exchangeName;
-    /** @var ?array<mixed> */
-    private ?array $queues;
-
     /** @param ?array<mixed> $queues */
     public function __construct(
-        AMQPChannel $channel,
-        string $exchangeName,
-        ?array $queues = null,
-        string $exchangeTyp = AMQPExchangeType::DIRECT
+        private readonly AMQPChannel $channel,
+        private readonly string $exchangeName,
+        private readonly array|null $queues = null,
+        string $exchangeTyp = AMQPExchangeType::DIRECT,
     ) {
-        $this->channel      = $channel;
-        $this->exchangeName = $exchangeName;
-        $this->queues       = $queues;
-
         $persistent = true;
         $this->channel->exchange_declare($exchangeName, $exchangeTyp, false, $persistent, false);
         if ($queues === null) {
@@ -32,6 +23,7 @@ trait ExchangeDeclaration
         }
 
         foreach ($queues as $queue) {
+            \assert(\is_array($queue));
             $this->channel->queue_declare($queue['name'], false, $persistent, false, false);
 
             if (isset($queue['binding_keys'])) {

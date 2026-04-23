@@ -7,6 +7,7 @@ namespace WAG\RabbitMq\Tests;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AbstractConnection;
 use PhpAmqpLib\Message\AMQPMessage;
+use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
 use WAG\RabbitMq\ProducerConfirmed;
 
@@ -15,6 +16,7 @@ final class ProducerConfirmedTest extends TestCase
     /**
      * @test
      * @covers \WAG\RabbitMq\ProducerConfirmed
+     * @throws Exception
      */
     public function publishMessage(): void
     {
@@ -37,6 +39,7 @@ final class ProducerConfirmedTest extends TestCase
     /**
      * @test
      * @covers \WAG\RabbitMq\ProducerConfirmed
+     * @throws Exception
      */
     public function channelAndConnectionAreClosedOnExit(): void
     {
