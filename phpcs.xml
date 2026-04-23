@@ -3,12 +3,17 @@
     <!-- display progress -->
     <arg value="p"/>
     <arg name="colors"/>
+    <arg name="parallel" value="12"/>
 
     <!-- inherit rules from: -->
     <rule ref="Doctrine">
+        <exclude name="Squiz.WhiteSpace.LanguageConstructSpacing"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat"/>
         <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly"/>
         <exclude name="SlevomatCodingStandard.Classes.DisallowLateStaticBindingForConstants"/>
     </rule>
+    <rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.DNFTypeHintFormat"/>
     <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants"/>
     <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
     <rule ref="Generic.Files.LineLength">

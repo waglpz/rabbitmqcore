@@ -271,6 +271,6 @@ class ConsumerTest extends TestCase
         $channel = $this->createMock(AMQPChannel::class);
         $channel->expects(self::once())->method('close');
         $channel->expects(self::once())->method('getConnection')->willReturn($connection);
-        (new Consumer($channel, 'test_exchange'));
+        new Consumer($channel, 'test_exchange');
     }
 }

@@ -1,4 +1,4 @@
-FROM php:7.4-buster
+FROM php:8.3-bookworm
 
 ARG APPUID
 ARG APPUGID
@@ -8,6 +8,7 @@ RUN apt-get update;                 \
     apt-get install                 \
             -y                      \
             --no-install-recommends \
+        git                         \
         libonig-dev                 \
         libzip-dev                  \
         locales                     \
@@ -20,15 +21,15 @@ RUN apt-get update;                 \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
 
 ## core PHP extensions
-RUN docker-php-ext-enable opcache;       \
-    docker-php-ext-install                       \
-        mbstring                        \
+RUN docker-php-ext-enable opcache; \
+    docker-php-ext-install         \
+        mbstring                   \
         sockets
 
 RUN groupadd -g ${APPUGID} nutzer;    \
     useradd -r -l -u ${APPUID} -m -g nutzer nutzer
 
-RUN pecl install xdebug-2.9.0
+RUN pecl install xdebug
 
 # composer
 ENV COMPOSER_HOME /home/nutzer
@@ -36,6 +37,7 @@ ENV COMPOSER_HOME /home/nutzer
 RUN curl -sS https://getcomposer.org/installer |                \
        php -- --install-dir=/usr/local/bin --filename=composer  \
     && composer global require maglnet/composer-require-checker \
-    && chown -R nutzer:nutzer $COMPOSER_HOME
+    && chown -R nutzer:nutzer $COMPOSER_HOME \
+    && git config --global --add safe.directory /app
 
 WORKDIR /app

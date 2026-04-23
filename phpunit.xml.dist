@@ -6,14 +6,12 @@
         displayDetailsOnTestsThatTriggerDeprecations="true"
         displayDetailsOnTestsThatTriggerErrors="true"
         displayDetailsOnTestsThatTriggerWarnings="true"
+        displayDetailsOnPhpunitDeprecations="true"
         cacheResult="true"
         bootstrap="vendor/autoload.php"
         cacheDirectory="var/.phpunit.cache"
 >
   <coverage>
-    <include>
-      <directory suffix=".php">./src</directory>
-    </include>
     <report>
       <html outputDirectory="var/.build-output/coverage"/>
       <text outputFile="php://stdout" showOnlySummary="true"/>

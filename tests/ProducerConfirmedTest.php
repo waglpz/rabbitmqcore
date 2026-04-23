@@ -14,9 +14,10 @@ use WAG\RabbitMq\ProducerConfirmed;
 final class ProducerConfirmedTest extends TestCase
 {
     /**
+     * @throws Exception
+     *
      * @test
      * @covers \WAG\RabbitMq\ProducerConfirmed
-     * @throws Exception
      */
     public function publishMessage(): void
     {
@@ -37,9 +38,10 @@ final class ProducerConfirmedTest extends TestCase
     }
 
     /**
+     * @throws Exception
+     *
      * @test
      * @covers \WAG\RabbitMq\ProducerConfirmed
-     * @throws Exception
      */
     public function channelAndConnectionAreClosedOnExit(): void
     {
@@ -48,6 +50,6 @@ final class ProducerConfirmedTest extends TestCase
         $channel = $this->createMock(AMQPChannel::class);
         $channel->expects(self::once())->method('close');
         $channel->expects(self::once())->method('getConnection')->willReturn($connection);
-        (new ProducerConfirmed($channel, 'test_exchange'));
+        new ProducerConfirmed($channel, 'test_exchange');
     }
 }
