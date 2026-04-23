@@ -20,15 +20,15 @@ RUN apt-get update;                 \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
 
 ## core PHP extensions
-RUN docker-php-ext-enable opcache;       \
-    docker-php-ext-install                       \
-        mbstring                        \
+RUN docker-php-ext-enable opcache; \
+    docker-php-ext-install         \
+        mbstring                   \
         sockets
 
 RUN groupadd -g ${APPUGID} nutzer;    \
     useradd -r -l -u ${APPUID} -m -g nutzer nutzer
 
-RUN pecl install xdebug-2.9.0
+RUN pecl install xdebug
 
 # composer
 ENV COMPOSER_HOME /home/nutzer

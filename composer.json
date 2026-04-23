@@ -6,6 +6,7 @@
   "minimum-stability": "stable",
   "prefer-stable": true,
   "config": {
+    "process-timeout": 72000,
     "optimize-autoloader": true,
     "apcu-autoloader": true,
     "discard-changes": true,
@@ -22,7 +23,7 @@
     "ext-mbstring": "*",
     "ext-sockets": "*",
     "php-amqplib/php-amqplib": "^3.5",
-    "webmozart/assert": "^1.11"
+    "webmozart/assert": "^2.3"
   },
   "require-dev": {
     "doctrine/coding-standard": "^11.1",
