@@ -3,7 +3,8 @@
 GREEN="\e[0;92m"
 RESET="\e[0m"
 
-USER_NAME=www-data
+USER_NAME=nutzer
+
 IMAGE_NAME=${USER_NAME}/$(basename $PWD)
 
 echo -e "${GREEN}Begin create Docker image '${IMAGE_NAME}' ...${RESET}"
